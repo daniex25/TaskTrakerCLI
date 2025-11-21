@@ -69,11 +69,11 @@ public class Tarea {
     //ToString personalizado:
     @Override
     public String toString() {
-        return "Tareas: " +
-                "\n || ID: " + id + "\n" +
-                "\n || Descripción: " + descripcion + "\n" +
-                "\n || Estado: " + estado + "\n" +
-                "\n || Fecha de Creación: " + creadoEn + "\n" +
-                "\n || Última Actualización: " + actualizadoEn;
+        return "Tarea: " +
+                "\n | ID: " + id + " | \n" +
+                "\n | Descripción: " + descripcion + " | \n" +
+                "\n | Estado: " + estado + " | \n" +
+                "\n | Fecha de Creación: " + creadoEn + " | \n" +
+                "\n | Última Actualización: " + actualizadoEn;
     }
 }
