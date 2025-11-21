@@ -2,6 +2,10 @@ package cli;
 
 import modelo.Tarea;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -9,11 +13,37 @@ import java.util.List;
 public class AdministrarTarea {
     //Se utilizará como memoria temporal antes de guardarlo en el archvio JSON
     private List<Tarea> listaTareas = new ArrayList<Tarea>();
+    private static final String NOMBRE_ARCHIVO = "tareas.json";
 
     public void AgregarTarea(int id, String descripcion){
         Tarea nuevaTarea = new Tarea(id, descripcion);
         listaTareas.add(nuevaTarea);
         System.out.println("La tarea fue agregada " + "\n" + nuevaTarea);
+    }
+
+    public void GuardarAJSON(){
+        //BufferWriter para poder escribir en el archivo tareas.json
+        try(BufferedWriter escritor = new BufferedWriter(new FileWriter(NOMBRE_ARCHIVO))) {
+            //Abrimos llaves Json
+            escritor.write("{");
+            //Iteramos todas las tareas para guardarlas
+            for (int i = 0; i<listaTareas.size(); i++){
+                Tarea tarea = listaTareas.get(i);
+                //Cambiamos el formato de String para que se guarde en el formato JSON
+                escritor.write(String.format(
+                        "{\"id\":%d,\"descripcion\":\"%s\",\"estado\":\"%s\",\"creadoEn\":\"%s\",\"actualizadoEn\":\"%s\"}",
+                        tarea.getId(),tarea.getDescripcion(),tarea.getEstado(),tarea.getCreadoEn(),tarea.getActualizadoEn()
+                ));
+                //Si aún hay mas tareas, poner la coma
+                if (i < listaTareas.size()-1){
+                    escritor.write(",");
+                }
+            }
+            //Cerramos llaves JSON
+            escritor.write("}");
+        }catch (IOException e){
+            System.out.println("Error al guardar el archivo, " + e.getMessage());
+        }
     }
 
     public void ListarTarea(){

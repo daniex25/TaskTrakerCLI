@@ -5,10 +5,12 @@ import modelo.Tarea;
 
 public class Main {
     public static void main(String[] args) {
+
         AdministrarTarea admin = new AdministrarTarea();
         admin.AgregarTarea(1,"Practicar Java");
         admin.AgregarTarea(2, "Segunda Tarea");
         admin.AgregarTarea(3,"Tercera Tarea");
+        admin.AgregarTarea(6,"Agregar método CLI a este proyecto");
 
         System.out.println("Todas las tareas: ");
         admin.ListarTarea();
@@ -36,5 +38,7 @@ public class Main {
 
         System.out.println("Listar todas las tareas: ");
         admin.ListarTarea();
+
+        admin.GuardarAJSON();
     }
 }
