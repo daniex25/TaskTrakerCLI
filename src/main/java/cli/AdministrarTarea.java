@@ -16,9 +16,11 @@ public class AdministrarTarea {
         CargarTareaDeJSON();
     }
 
-    public void AgregarTarea(int id, String descripcion){
-        Tarea nuevaTarea = new Tarea(id, descripcion);
+    public void AgregarTarea(String descripcion){
+        int nuevoId = listaTareas.isEmpty() ? 1 : listaTareas.get(listaTareas.size()-1).getId()+1;
+        Tarea nuevaTarea = new Tarea(nuevoId, descripcion);
         listaTareas.add(nuevaTarea);
+        GuardarTareaAJSON();
         System.out.println("La tarea fue agregada " + "\n" + nuevaTarea);
     }
 
@@ -64,10 +66,16 @@ public class AdministrarTarea {
                     tarea = tarea.replace("{", "").replace("}","");
                     String[] SplitArreglo = tarea.split(","); //Separamos donde haya una coma
                     Map<String,String> tareaMap = new HashMap<>();
+                    //TODO: Comprender esto
                     for (String splitTareas : SplitArreglo){
-                        String[] LlaveValor = splitTareas.split(":");
-                        tareaMap.put(LlaveValor[0].replace("\"", ""),LlaveValor[1].replace("\"",""));
+                        int indicePrimeraColumna = splitTareas.indexOf(":"); //Solo se divide en el primer ":"
+                        if (indicePrimeraColumna != -1){
+                            String llave = splitTareas.substring(0, indicePrimeraColumna).replace("\"","").trim();
+                            String valor = splitTareas.substring(indicePrimeraColumna+1).replace("\"","" ).trim();
+                            tareaMap.put(llave,valor);
+                        }
                     }
+
                     Tarea objetoTarea = new Tarea(
                             Integer.parseInt(tareaMap.get("id")),
                             tareaMap.get("descripcion")
