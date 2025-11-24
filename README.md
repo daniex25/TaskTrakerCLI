@@ -6,25 +6,19 @@ Task-CLI es una aplicación de consola escrita en Java que permite administrar t
 Permite agregar, listar, actualizar, eliminar y marcar tareas como *done* o *in-progress*.
 Todas las tareas se almacenan en un archivo JSON, garantizando persistencia entre ejecuciones.
 
-Este proyecto es ideal para practicar:
+Este proyecto es útil para practicar:
 
 * Programación orientada a objetos (POO)
-* Manejo de archivos JSON
+* Manejo y persistencia de datos en JSON
 * Diseño de interfaces de línea de comandos
-* Validación de entrada y manejo de listas
+* Validación de entrada y manejo de colecciones
 
 ---
 
-## Características principales
+## Requisitos previos
 
-* Agregar tareas con descripción
-* Listar tareas con o sin filtro
-* Actualizar descripción por ID
-* Marcar tareas como done
-* Marcar tareas como in-progress
-* Eliminar tareas por ID
-* Persistencia automática en JSON
-* CLI interactiva basada en comandos
+* Java 17 o superior
+* Apache Maven 3.8 o superior
 
 ---
 
@@ -32,10 +26,12 @@ Este proyecto es ideal para practicar:
 
 ```
 /src
- └── cli
-     ├── TareaCLI.java
-     ├── AdministrarTarea.java
-     ├── Tarea.java
+ └── main
+      └── java
+           └── cli
+                ├── TareaCLI.java
+                ├── AdministrarTarea.java
+                ├── Tarea.java
 ```
 
 Archivo JSON generado automáticamente:
@@ -46,31 +42,51 @@ tareas.json
 
 ---
 
-## Cómo ejecutar el programa
+## Cómo compilar y ejecutar
 
-Compilar:
+### Compilar el proyecto
 
 ```bash
-javac -d out src/cli/*.java
+mvn clean compile
 ```
 
-Ejecutar:
+### Ejecutar con Maven
 
 ```bash
-java -cp out cli.TareaCLI
+mvn exec:java -Dexec.mainClass="cli.TareaCLI"
+```
+
+---
+
+## Empaquetar como JAR
+
+### Generar el JAR
+
+```bash
+mvn clean package
+```
+
+Archivo generado:
+
+```
+target/TaskTrakerCLI-1.0-SNAPSHOT.jar
+```
+
+### Ejecutar el JAR
+
+```bash
+java -jar target/TaskTrakerCLI-1.0-SNAPSHOT.jar
 ```
 
 ---
 
 ## Uso del CLI
 
-Al iniciar la aplicación verás:
+Al iniciar la aplicación se mostrará:
 
 ```
 task-cli
 ```
-
-A partir de ahí puedes usar los comandos que se describen a continuación.
 
 ---
 
@@ -80,12 +96,6 @@ A partir de ahí puedes usar los comandos que se describen a continuación.
 
 ```
 agregar <descripción>
-```
-
-Ejemplo:
-
-```
-agregar Terminar proyecto de Java
 ```
 
 ### Listar tareas
@@ -103,22 +113,10 @@ listar done
 actualizar <id> <nueva descripción>
 ```
 
-Ejemplo:
-
-```
-actualizar 3 Hacer tarea de cálculo
-```
-
 ### Eliminar una tarea
 
 ```
 eliminar <id>
-```
-
-Ejemplo:
-
-```
-eliminar 5
 ```
 
 ### Marcar tarea como done
@@ -155,7 +153,7 @@ Al usar el comando `salir`, las tareas se guardan en:
 tareas.json
 ```
 
-Ejemplo de contenido:
+Ejemplo:
 
 ```json
 {
@@ -188,13 +186,14 @@ salir
 ## Tecnologías usadas
 
 * Java 17 o superior
-* Manejo de archivos JSON
+* Apache Maven
+* JSON para persistencia
 * Programación orientada a objetos
 
 ---
 
 ## Autor
 
-Proyecto desarrollado como práctica de Java CLI y manipulación de datos en archivos.
+Proyecto desarrollado como práctica de Java CLI y persistencia de datos usando JSON.
 
 ---
