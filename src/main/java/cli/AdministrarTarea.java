@@ -24,7 +24,7 @@ public class AdministrarTarea {
         System.out.println("La tarea fue agregada " + "\n" + nuevaTarea);
     }
 
-    private void GuardarTareaAJSON(){
+    public void GuardarTareaAJSON(){
         //BufferWriter para poder escribir en el archivo tareas.json
         try(BufferedWriter escritor = new BufferedWriter(new FileWriter(NOMBRE_ARCHIVO))) {
             //Abrimos llaves Json
@@ -49,7 +49,7 @@ public class AdministrarTarea {
         }
     }
 
-    private void CargarTareaDeJSON(){
+    public void CargarTareaDeJSON(){
         try(BufferedReader lector = new BufferedReader(new FileReader(NOMBRE_ARCHIVO))){
             //leer la documentación sobre Stream en Java
             //lines: Métod de BufferedReader que lee todas las líneas del archivo y las devuelve como un Stream<String>.
@@ -93,11 +93,23 @@ public class AdministrarTarea {
     }
 
 
-    public void ListarTarea(){
-        if (listaTareas.isEmpty()){
+    public void ListarTarea(String estadoFiltro){
+        if (listaTareas.isEmpty()) {
             System.out.println("No hay tareas agregadas");
+            return;
+        }
+
+        //filtrar por estados de las tareas
+        List<Tarea> tareaFiltro = listaTareas;
+
+        if (estadoFiltro != null && !estadoFiltro.isEmpty()){
+            tareaFiltro = listaTareas.stream().filter(tarea -> tarea.getEstado().equals(estadoFiltro)).collect(Collectors.toList());
+        }
+
+        if (tareaFiltro.isEmpty()){
+            System.out.println("No hay tareas para: " + tareaFiltro);
         }else{
-            for (Tarea tarea : listaTareas){
+            for (Tarea tarea:listaTareas){
                 System.out.println(tarea);
             }
         }
